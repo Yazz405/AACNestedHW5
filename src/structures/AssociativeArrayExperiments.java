@@ -26,6 +26,27 @@ public class AssociativeArrayExperiments {
     divider(pen);
     experimentBigIntToBigInt(pen);
     divider(pen);
+
+    AssociativeArray<String,String> experiment = new AssociativeArray<String, String>();
+    // experiment.set("a", "A");
+    // experiment.set("b", "B");
+    // experiment.set("c", "A");
+    // experiment.set("d", "B");
+    // experiment.set("e", "A");
+    // experiment.set("f", "B");
+    // experiment.set("g", "A");
+    // experiment.set("h", "B");
+    // experiment.set("k", "A");
+    // experiment.set("l", "B");
+    // experiment.set("m", "A");
+    // experiment.set("n", "B");
+    // experiment.remove("e");
+
+    pen.println(experiment.size());
+    for(int i = 0; i < experiment.size(); i ++){
+      pen.println((experiment.getKeys())[i]);
+    }
+    
   } // main(String[])
 
   // +-------------+-------------------------------------------------

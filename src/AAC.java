@@ -128,7 +128,7 @@ public class AAC implements ActionListener {
 		pane.requestFocusInWindow();
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception{
 
 		try {
 			// Set property as Kevin Dictionary
@@ -160,7 +160,7 @@ public class AAC implements ActionListener {
 	 * (e.g. home, next), it updates the screen. If the button is an image within
 	 * the category, it speaks aloud the text
 	 */
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e){
 		String actionCommand = e.getActionCommand();
 		System.out.println("Button clicked: "+actionCommand);
 		if(actionCommand.equals("back")) {

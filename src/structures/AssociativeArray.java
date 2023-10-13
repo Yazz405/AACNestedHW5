@@ -2,6 +2,9 @@ package structures;
 
 import static java.lang.reflect.Array.newInstance;
 
+import java.lang.reflect.Array;
+
+
 /**
  * A basic implementation of Associative Arrays with keys of type K
  * and values of type V. Associative Arrays store key/value pairs
@@ -86,6 +89,8 @@ public class AssociativeArray<K, V> {
     // | Public Methods |
     // +----------------+
 
+
+
     /**
      * Set the value associated with key to value. Future calls to
      * get(key) will return value.
@@ -126,6 +131,24 @@ public class AssociativeArray<K, V> {
         } // else
 
     } // set(K,V)
+
+    /**
+     * Get all the keys from the array.
+     * 
+     */
+    @SuppressWarnings({ "unchecked" })
+    public K[] getKeys(){
+        K[] temp = (K[]) Array.newInstance( (this.pairs[0].key).getClass(), this.size);
+        int j = 0;
+        for(int i = 0; i < this.pairs.length; i++){
+            if(this.pairs[i] != null){
+                temp[j] = this.pairs[i].key;
+                j++;
+            }//if
+        }//for
+
+        return temp;
+    }//getKeys()
 
     /**
      * Get the value associated with key.

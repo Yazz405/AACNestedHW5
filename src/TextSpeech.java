@@ -6,6 +6,13 @@ import javax.speech.Central;
 import javax.speech.synthesis.Synthesizer;
 import javax.speech.synthesis.SynthesizerModeDesc;
   
+/**
+ * An implementation of category with a name and an AssiaticeArray that maps image 
+ * locations to text. It represents the mappings for a single page of items that 
+ * should be displayed
+ *
+ * @author Alma Ordaz
+ */
 public class TextSpeech {
   
     public static void main(String[] args)
