@@ -45,54 +45,34 @@ public class AACCategory {
     */
    public void addItem(String imageLoc, String text) {
       this.items.set(imageLoc, text);
-   }// addItem
+   }// addItem(String, String)
 
    /*
     * Returns the name of the category
     */
    public String getCategory() {
       return this.name;
-   }// getCategory
+   }// getCategory()
 
    /*
     * Returns the text associated with the given image loc in this category
     */
    public String getText(String imageLoc) throws Exception {
       return this.items.get(imageLoc);
-   }// getText
+   }// getText(String)
 
    /*
     * Determines if the provided images is stored in the category
     */
    public boolean hasImage(String imageLoc) {
       return this.items.hasKey(imageLoc);
-   }// hasImage
+   }// hasImage(String)
 
    /*
     * Returns an array of all the images in the category
     */
    public String[] getImages() {
       return this.items.getKeys();
-   }// getImages
-
-
-   // public static void main(String[] args) throws Exception{
-
-   //    AACCategory test = new AACCategory("start");
-   //    test.addItem("loc1", "bannana");
-   //    test.addItem("loc2", "strawberry");
-   //    test.addItem("loc3", "cherry");
-
-   //    String[] helper = test.getImages();
-
-   //    for (int i = 0; i < helper.length; i++) {
-   //       System.out.println("helper: " + helper[i]);
-   //    }
-
-   //    System.out.println(test.getCategory());
-   //    System.out.println(test.getText("loc2"));
-   //    System.out.println(test.hasImage("loc4"));
-
-   // }// main
+   }// getImages()
 
 }// class AACCategory

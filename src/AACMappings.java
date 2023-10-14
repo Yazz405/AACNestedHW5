@@ -1,13 +1,13 @@
+import java.io.File;
+import java.io.PrintWriter;
+
 import structures.AssociativeArray;
-import structures.KeyNotFoundException;
 
 /**
  * An implementation that keeps track of the complete set of AAC mappings. It
- * will
- * store the mapping of the images in the home page to AACCategories using the
+ * will store the mapping of the images in the home page to AACCategories using the
  * categories field. There is a currentCategory that will keep track of the
- * category
- * we are in, and finally a default category that represents the home category.
+ * category we are in, and finally a default category that represents the home category.
  * 
  * @author Alma Ordaz
  */
@@ -18,9 +18,14 @@ public class AACMappings {
   // +--------+
 
   /*
+   * the name of the file
+   */
+  String filename;
+
+  /*
    * represets the home category
    */
-  AACCategory defaultCategory;
+  AACCategory topLevelCategory;
 
   /*
    * keeps track of the category we are in
@@ -40,8 +45,10 @@ public class AACMappings {
    * creates a new AACMappings given the starting file name
    */
   public AACMappings(String filename) {
-    this.currentCategory = new AACCategory(filename);
-    this.defaultCategory = new AACCategory(filename);
+    this.filename = filename;
+
+    this.topLevelCategory = new AACCategory("topLevelCategory");
+    this.currentCategory = this.topLevelCategory;
 
     this.categories = new AssociativeArray<String, AACCategory>();
 
@@ -60,71 +67,93 @@ public class AACMappings {
    */
   public String getText(String imageLoc) {
 
-    try{
-      // if the image is a category
-    if (isCategory(imageLoc)) {
-System.out.println("here");
-      this.currentCategory = this.categories.get(imageLoc);
-      return this.categories.get(imageLoc).getCategory();
-    } // if
+    String result = "";
 
-    return this.currentCategory.getText(imageLoc);
-    } catch (Exception e){
-      return "exception";
+    try {
+      if (isCategory(imageLoc)) {
+        this.currentCategory = this.categories.get(imageLoc);
+        result = this.topLevelCategory.getText(imageLoc);
+      } // if
+      else {
+        result = this.currentCategory.getText(imageLoc);
+      } // else
+    } catch (Exception e) {
+      e.printStackTrace();
     }
-
-  }// getText()
+    return result;
+  }// getText(String)
 
   /*
    * Provides an array of all the images in the current category
    */
   public String[] getImageLocs() {
 
-
-    // return this.currentCategory.getImages();
-
-    return new String[] { "img/food/icons8-french-fries-96.png",
-        "img/food/icons8-watermelon-96.png" }; // STUB
+    return this.currentCategory.getImages();
   } // getImageLocs()
 
   /*
    * Resets the current category of the AAC back to the default category
    */
   public void reset() {
-
-    this.currentCategory = this.defaultCategory;
-  }// reset
+    this.currentCategory = this.topLevelCategory;
+  }// reset()
 
   /*
    * Gets the current category
    */
   public String getCurrentCategory() {
-
     return this.currentCategory.getCategory();
-    // return "food"; // STUB
-  }
+  }//getCurrentCategory()
 
   /*
    * Determines if the image represents a category or text to speak
    */
   public boolean isCategory(String imageLoc) {
-    // return this.categories.hasKey(imageLoc);
-    return true;
-  }// isCategory
+    return this.currentCategory == this.topLevelCategory;
+  }// isCategory(String)
 
   /*
    * Writes the ACC mappings stored to a file.
    */
   public void writeToFile(String filename) {
-    // stub
-  }// writeToFile
+
+    try {
+      PrintWriter pen = new PrintWriter(new File(filename));
+      String[] categoryNames = this.topLevelCategory.getImages();
+
+      for(String current : categoryNames){
+        pen.println(current + " " + this.topLevelCategory.getText(current));
+
+        for(String item : this.categories.get(current).getImages()) {
+          pen.println(">" + item + " " + this.categories.get(current).getText(item));
+        }//for
+      }//for
+
+      pen.close();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }//try-catch
+
+  }// writeToFile(String)
 
   /*
    * Adds the mapping to the current category (or the default category if that is
    * the current category)
    */
   public void add(String imageLoc, String text) {
-    this.currentCategory.addItem(imageLoc, text);
-  }// add
+
+    try {
+      if (isCategory(imageLoc)) {
+        this.categories.set(imageLoc, new AACCategory(text));
+        this.topLevelCategory.addItem(imageLoc, text);
+      } // if
+      else {
+        this.currentCategory.addItem(imageLoc, text);
+        this.categories.set(this.categories.getKey(this.currentCategory), this.currentCategory);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    } // try-catch
+  }// add(String, String)
 
 }

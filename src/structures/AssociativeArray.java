@@ -132,22 +132,35 @@ public class AssociativeArray<K, V> {
 
     } // set(K,V)
 
+    /*
+     * get the key associated with a value
+     */
+    public K getKey(V value) throws KeyNotFoundException{
+        for(int i = 0; i < this.pairs.length; i++){
+            if(this.pairs[i].value == value){
+                return this.pairs[i].key;
+            }//if
+        }//for
+
+        throw new KeyNotFoundException();
+    }//getKey(V)
+
     /**
      * Get all the keys from the array.
-     * 
      */
-    @SuppressWarnings({ "unchecked" })
-    public K[] getKeys(){
-        K[] temp = (K[]) Array.newInstance( (this.pairs[0].key).getClass(), this.size);
+    public String[] getKeys(){
+
+        String[] result  = new String[this.size];
+
         int j = 0;
         for(int i = 0; i < this.pairs.length; i++){
             if(this.pairs[i] != null){
-                temp[j] = this.pairs[i].key;
+                result[j] = this.pairs[i].key.toString();
                 j++;
             }//if
         }//for
 
-        return temp;
+        return result;
     }//getKeys()
 
     /**
