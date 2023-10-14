@@ -149,7 +149,6 @@ public class AACMappings {
       } // if
       else {
         this.currentCategory.addItem(imageLoc, text);
-        this.categories.set(this.categories.getKey(this.currentCategory), this.currentCategory);
       }
     } catch (Exception e) {
       e.printStackTrace();

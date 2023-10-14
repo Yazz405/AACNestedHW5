@@ -2,8 +2,6 @@ package structures;
 
 import static java.lang.reflect.Array.newInstance;
 
-import java.lang.reflect.Array;
-
 
 /**
  * A basic implementation of Associative Arrays with keys of type K
@@ -131,19 +129,6 @@ public class AssociativeArray<K, V> {
         } // else
 
     } // set(K,V)
-
-    /*
-     * get the key associated with a value
-     */
-    public K getKey(V value) throws KeyNotFoundException{
-        for(int i = 0; i < this.pairs.length; i++){
-            if(this.pairs[i].value == value){
-                return this.pairs[i].key;
-            }//if
-        }//for
-
-        throw new KeyNotFoundException();
-    }//getKey(V)
 
     /**
      * Get all the keys from the array.
