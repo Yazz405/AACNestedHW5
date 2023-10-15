@@ -60,26 +60,21 @@ public class AACMappings {
 
   /*
    * Given the image location selected, it determines the associated text with the
-   * image.
-   * If the image provided is a category, it also updates the AAC's current
-   * category to be
-   * the category associated with that image
+   * image. If the image provided is a category, it also updates the AAC's current
+   * category to be the category associated with that image.
    */
   public String getText(String imageLoc) {
 
     String result = "";
 
     try {
-      if (isCategory(imageLoc)) {
+      result = this.currentCategory.getText(imageLoc);
+      if (this.categories.hasKey(imageLoc)) {
         this.currentCategory = this.categories.get(imageLoc);
-        result = this.topLevelCategory.getText(imageLoc);
       } // if
-      else {
-        result = this.currentCategory.getText(imageLoc);
-      } // else
     } catch (Exception e) {
       e.printStackTrace();
-    }
+    }//try-catch
     return result;
   }// getText(String)
 
@@ -99,10 +94,17 @@ public class AACMappings {
   }// reset()
 
   /*
-   * Gets the current category
+   * Gets the current category, if the category is the topLevelCategory,
+   * it returns an empty string.
    */
   public String getCurrentCategory() {
-    return this.currentCategory.getCategory();
+
+    if(this.currentCategory == this.topLevelCategory){
+      return "";
+    }//if
+    else{
+      return this.currentCategory.getCategory();
+    }//else
   }//getCurrentCategory()
 
   /*
@@ -133,7 +135,6 @@ public class AACMappings {
     } catch (Exception e) {
       e.printStackTrace();
     }//try-catch
-
   }// writeToFile(String)
 
   /*
@@ -143,16 +144,13 @@ public class AACMappings {
   public void add(String imageLoc, String text) {
 
     try {
+      this.currentCategory.addItem(imageLoc, text);
       if (isCategory(imageLoc)) {
         this.categories.set(imageLoc, new AACCategory(text));
-        this.topLevelCategory.addItem(imageLoc, text);
       } // if
-      else {
-        this.currentCategory.addItem(imageLoc, text);
-      }
     } catch (Exception e) {
       e.printStackTrace();
     } // try-catch
   }// add(String, String)
 
-}
+}//class AACMappings
